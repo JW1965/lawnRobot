@@ -1,35 +1,28 @@
 public class lawnRobot {
-
-	
-	static int lastDirection = 0;
-	static int newDirection = 0;
-	
-	static int moveCounter = 0;
-	static int rotationCounter = 0;
-	static int bounceCounter = 0;
-	
-	int totalGrassArea = 0;
-	int totalGrassCut = 0;
-	
-	static int stationPosX = 0;
-	static int stationPosY = 0;
-	
-	static int robotPosX = 0;
-	static int robotPosY = 0;
-	
-	
-	
-	public static int calcRotates (int lastDir, int newDir) {
+	private static int lastDirection = 0;
+	private static int newDirection = 0;	
+	private static int moveCounter = 0;
+	private static int rotationCounter = 0;
+	private static int bounceCounter = 0;	
+	private static int stationPosX = 0;
+	private static int stationPosY = 0;
+	private static int robotPosX = 0;
+	private static int robotPosY = 0;
+	private int totalGrassArea = 0;
+	private int totalGrassCut = 0;	
+			
+	public static int calcRotates(int lastDir, int newDir) {
+		return newDir == lastDir ? 0 : 4 - (Math.abs((Math.abs(newDir-lastDir)/45)-4));
+		/* Falls bugs:
 		if (newDir == lastDir) {
 			return 0;
 		} else {
 			return 4-(Math.abs((Math.abs(newDir-lastDir)/45)-4));
 		}
-		//return newDir == lastDir ? 0 : 4 - (Math.abs((Math.abs(newDir-lastDir)/45)-4));
-	}
-	
-	public static int getTargetDirectionX (int dir) {   // just get taerget Posiion, not change og position itself
-		if ((dir == 0) || (dir ==180)) {
+		 */
+	}	
+	public static int getTargetDirectionX(int dir) { //just get target position, not change OG position itself
+		if ((dir == 0) || (dir == 180)) {
 			return 0;
 		} else if ((dir == 45) || (dir == 90) || (dir == 135)) {
 			return 1;
@@ -37,18 +30,16 @@ public class lawnRobot {
 			return -1;
 		}
 	}
-
-	public static int getTargetDirectionY (int dir) {   // just get taerget Posiion, not change og position itself
-		if ((dir == 90) || (dir ==270)) {
+	public static int getTargetDirectionY(int dir) { //just get target position, not change OG position itself
+		if ((dir == 90) || (dir == 270)) {
 			return 0;
 		} else if ((dir == 135) || (dir == 180) || (dir == 225)) {
-			return +1;
+			return 1;
 		} else {
 			return -1;
 		}
 	}
-	
-	public static void printResults (String robotName, String gardenName, garden g) {
+	public static void printResults(String robotName, String gardenName, garden g) {
 		/*
 		 *  output Move-Counter
 		 *  output rotation counter
@@ -72,36 +63,25 @@ public class lawnRobot {
 		
 	}
 	
-	public static void main (String[] args) {
-		
-	
-		System.out.println ("challenge started ....\n");
-
+	public static void main(String[] args) {
+		System.out.println("Challenge started ....\n");
 		// read garden
-		garden g1 = new garden ();
-		boolean succ = g1.readGarden ("abc");
-				
+		garden g1 = new garden();
+		boolean succ = g1.readGarden("abc");			
 		// create robot
-		robot r1 = new robot ();
-		
+		robot r1 = new robot();
 		/*
 		for (int i = 1; i <= 100; i++) {
 			System.out.printf (" " + r1.move());
 		}
 		System.out.println();
 		*/
-		
-		
-		// cutting
-		
-		while ( (! r1.isFinished()) && (! r1.cantMove ())) {
-			newDirection = r1.move ();
-			rotationCounter = rotationCounter + calcRotates (lastDirection, newDirection);
-			
-			int targetPosX = robotPosX +  getTargetDirectionX (newDirection);
-			int targetPosY = robotPosY +  getTargetDirectionY (newDirection);
-			
-			if (! g1.isGrass(targetPosX, targetPosY)) {
+		// cutting		
+		while ((!r1.isFinished()) && (!r1.cantMove())) {
+			newDirection = r1.move();
+			rotationCounter = rotationCounter + calcRotates(lastDirection, newDirection);		
+			int targetPosX = robotPosX + getTargetDirectionX(newDirection), targetPosY = robotPosY + getTargetDirectionY(newDirection);
+			if (!g1.isGrass(targetPosX, targetPosY)) {
 				r1.sensorTriggered();
 				bounceCounter++;
 			} else {
@@ -109,8 +89,7 @@ public class lawnRobot {
 				robotPosY = targetPosY;
 				moveCounter++;
 				g1.setCut(robotPosX, robotPosY);
-				
-				System.out.println (moveCounter + " " + robotPosX + " " + robotPosY);
+				System.out.println(moveCounter + " " + robotPosX + " " + robotPosY);
 			}
 		}
 		/*
@@ -126,10 +105,8 @@ public class lawnRobot {
 		 * 		end
 		 * end
 		 * 				
-		 */
-		
-		
+		 */	
 		// output of result
-		printResults (r1.getName(), g1.getName(), g1);
+		printResults(r1.getName(), g1.getName(), g1);
 	}
 }

@@ -1,5 +1,3 @@
-
-
 public class garden {	
 	private char grassCharacter = '.';
 	private char stationCharacter = 'S';
