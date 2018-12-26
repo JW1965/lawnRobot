@@ -6,17 +6,16 @@ public class garden {
 	private char stationCharacter = 'S';
 	private char cutCharacter = '.';
 	private String gardenName = "";
-	
 	private int MAXSIZE = 50;
 	
-	private char [][] areaOrg = new char [MAXSIZE][MAXSIZE];
-	//private char [][] areaCut = new int [MAXSIZE][MAXSIZE];
+	private char[][] areaOrg = new char[MAXSIZE][MAXSIZE];
+	//private int[][] areaCut = new int[MAXSIZE][MAXSIZE];
 
-	public garden () {
-		gardenName =" first garden";
+	public garden() {
+		gardenName = "First garden";
 	}
 	
-	public String getName () {
+	public String getName() {
 		return gardenName;
 	}
 	
