@@ -19,13 +19,12 @@ public class garden {
 		return gardenName;
 	}
 	
-	public boolean readGarden (String fname) {
-		for (int i=0; i<MAXSIZE; i++) {
-			for (int j=0; j<MAXSIZE; j++) {
+	public boolean readGarden(String fname) {
+		for (int i = 0; i < MAXSIZE; i++) {
+			for (int j = 0; j < MAXSIZE; j++) {
 				areaOrg[i][j] = '.';
-			};
-			System.out.println();
-			
+			}
+			// System.out.println();
 		}
 		return true;
 	}
