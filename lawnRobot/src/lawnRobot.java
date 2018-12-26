@@ -6,8 +6,8 @@ public class lawnRobot {
 	private static int bounceCounter = 0;	
 	private static int stationPosX = 0;
 	private static int stationPosY = 0;
-	private static int robotPosX = 0;
-	private static int robotPosY = 0;
+	private static int robotPosX = 5;
+	private static int robotPosY = 5;
 	private int totalGrassArea = 0;
 	private int totalGrassCut = 0;	
 			

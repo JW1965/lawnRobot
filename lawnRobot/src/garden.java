@@ -40,7 +40,7 @@ public class garden {
 	public void print() {
 		for (int  i= 0; i < MAXSIZE; i++) {
 			for (int j=  0; j < MAXSIZE; j++) {
-				System.out.printf("%d", areaOrg[i][j]);
+				System.out.printf("%c", areaOrg[i][j]);
 			}
 			System.out.println();
 		}
