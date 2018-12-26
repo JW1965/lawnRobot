@@ -25,6 +25,7 @@ public class lawnRobot {
 		} else {
 			return 4-(Math.abs((Math.abs(newDir-lastDir)/45)-4));
 		}
+		//return newDir == lastDir ? 0 : 4 - (Math.abs((Math.abs(newDir-lastDir)/45)-4));
 	}
 	
 	public static int getTargetDirectionX (int dir) {   // just get taerget Posiion, not change og position itself
@@ -117,11 +118,11 @@ public class lawnRobot {
 		 * 
 		 * 		wenn neue Position auf einem Hindernis, dann
 		 * 			robot.sencor triggered
-		 * 			erhˆhe Bounce-Counter
+		 * 			erh√∂he Bounce-Counter
 		 * 		sonst
 		 * 			setze neue Posoition des Robots
 		 * 			moveCounter++;		
-		 * 			kennzeichne Rasenfl‰che als gem‰ht
+		 * 			kennzeichne Rasenfl√§che als gem√§ht
 		 * 		end
 		 * end
 		 * 				
