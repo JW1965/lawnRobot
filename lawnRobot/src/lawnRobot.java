@@ -4,23 +4,13 @@ public class lawnRobot {
 	private static int moveCounter = 0;
 	private static int rotationCounter = 0;
 	private static int bounceCounter = 0;	
-	private static int stationPosX = 0;
-	private static int stationPosY = 0;
-	private static int robotPosX = 5;
-	private static int robotPosY = 5;
-	private int totalGrassArea = 0;
-	private int totalGrassCut = 0;	
+	private static int robotPosX = 20;
+	private static int robotPosY = 20;
 			
 	public static int calcRotates(int lastDir, int newDir) {
 		return newDir == lastDir ? 0 : 4 - (Math.abs((Math.abs(newDir-lastDir)/45)-4));
-		/* Falls bugs:
-		if (newDir == lastDir) {
-			return 0;
-		} else {
-			return 4-(Math.abs((Math.abs(newDir-lastDir)/45)-4));
-		}
-		 */
 	}	
+
 	public static int getTargetDirectionX(int dir) { //just get target position, not change OG position itself
 		if ((dir == 0) || (dir == 180)) {
 			return 0;
@@ -40,14 +30,6 @@ public class lawnRobot {
 		}
 	}
 	public static void printResults(String robotName, String gardenName, garden g) {
-		/*
-		 *  output Move-Counter
-		 *  output rotation counter
-		 *  output Bounce-Counter
-		 *  output if robot is back in station
-		 *  absolute values and percantage of cut/uncut grass 
-		 *  coloured output of lawn map (green is cut, red is uncut)
-		 */
 		
 		System.out.println("=================================================================================================================================================");
 		System.out.println("Challenge:       Robot " +  robotName + "        Garden: " + gardenName);
@@ -58,7 +40,14 @@ public class lawnRobot {
 		System.out.println("# cut grass/total grass: " + g.getCuttedArea() + "/" + g.getGrassArea() + "      " + g.getCuttedArea() *100 / g.getGrassArea() + " %");
 		System.out.println("robot completed mission back in station: " + g.isStation (robotPosX, robotPosY));
 		System.out.println("-------------------------------------------------------------------------------------------------------------------------------------------------");
-		g.print();
+		System.out.println("Original");
+		g.printOrg();
+		System.out.println();
+		System.out.println("Nach Robotereinsatz:");
+		g.printCut();
+		System.out.println();
+		System.out.println("Heatmap:");
+		g.printHeatmap();
 		System.out.println("=================================================================================================================================================");
 		
 	}
@@ -67,16 +56,15 @@ public class lawnRobot {
 		System.out.println("Challenge started ....\n");
 		// read garden
 		garden g1 = new garden();
-		boolean succ = g1.readGarden("abc");			
+		boolean succ = g1.readGarden("K:/javaprog/workspace_Win10/git/lawnRobot/lawnRobot/garden01.txt");			
 		// create robot
 		robot r1 = new robot();
-		/*
-		for (int i = 1; i <= 100; i++) {
-			System.out.printf (" " + r1.move());
-		}
-		System.out.println();
-		*/
+
 		// cutting		
+		robotPosX = g1.getStationPosX ();
+		robotPosY = g1.getStationPosY (); 
+		
+		//System.out.printf("%10s%10s%10s%10s\n", "# Moves", "Direction", "Pos X", "Pos Y");
 		while ((!r1.isFinished()) && (!r1.cantMove())) {
 			newDirection = r1.move();
 			rotationCounter = rotationCounter + calcRotates(lastDirection, newDirection);		
@@ -84,28 +72,16 @@ public class lawnRobot {
 			if (!g1.isGrass(targetPosX, targetPosY)) {
 				r1.sensorTriggered();
 				bounceCounter++;
+				System.out.printf("%10d%10d%50s\n", moveCounter, newDirection, "sensor active");
 			} else {
 				robotPosX = targetPosX;
 				robotPosY = targetPosY;
 				moveCounter++;
 				g1.setCut(robotPosX, robotPosY);
-				System.out.println(moveCounter + " " + robotPosX + " " + robotPosY);
+				System.out.printf("%10d%10d%10d%10d\n", moveCounter, newDirection, robotPosX, robotPosY);
 			}
 		}
-		/*
 
-		 * 
-		 * 		wenn neue Position auf einem Hindernis, dann
-		 * 			robot.sencor triggered
-		 * 			erhöhe Bounce-Counter
-		 * 		sonst
-		 * 			setze neue Posoition des Robots
-		 * 			moveCounter++;		
-		 * 			kennzeichne Rasenfläche als gemäht
-		 * 		end
-		 * end
-		 * 				
-		 */	
 		// output of result
 		printResults(r1.getName(), g1.getName(), g1);
 	}
