@@ -3,6 +3,7 @@ import java.util.Random;
 public class robot {
 	private boolean isFinished;
 	private boolean cantMove;	
+	private boolean sensorTriggered;
 	private int moveCount;
 	private String robotName = "";
 	
@@ -10,6 +11,7 @@ public class robot {
 	public robot() {
 		isFinished = false;
 		cantMove = false;
+		sensorTriggered = false;
 		moveCount = 0;	
 		robotName = "Robbi 1 - a stupid one"; 
 	}	
@@ -20,11 +22,17 @@ public class robot {
 	public String getName() {
 		return robotName;
 	}	
-	public int move() {		
+	public int move() {
+		// strategy:
+		// choose a random direction in each step
+		// stop after MAXMOVE steps
+		int MAXMOVE = 100;
 		Random randomDir = new Random();
-		int dir8 = randomDir.nextInt(8);
-		if (moveCount++ >= 200) isFinished = true;
-		return dir8 * 45;
+		int direction = randomDir.nextInt(8) *45;
+		if (moveCount++ >= MAXMOVE) isFinished = true;
+		
+		sensorTriggered = false;
+		return direction;
 	}	
 	// public static boolean isFinsihed ()
 	// return true if robot indicates that the job is done
